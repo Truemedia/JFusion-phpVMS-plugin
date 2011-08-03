@@ -92,12 +92,12 @@ class JFusionAdmin_phpvms extends JFusionAdmin
         if (!empty($config)) {
             //save the parameters into array
             $params = array();
-            $params['database_host'] = $config['_DB_SERVER_'];
-            $params['database_name'] = $config['_DB_NAME_'];
-            $params['database_user'] = $config['_DB_USER_'];
-            $params['database_password'] = $config['_DB_PASSWD_'];
-            $params['database_prefix'] = $config['_DB_PREFIX_'];
-            $params['database_type'] = $config['_DB_TYPE_'];
+            $params['database_host'] = $config['DBASE_SERVER'];
+            $params['database_name'] = $config['DBASE_NAME'];
+            $params['database_user'] = $config['DBASE_USER'];
+            $params['database_password'] = $config['DBASE_PASS'];
+            $params['database_prefix'] = $config['TABLE_PREFIX'];
+            $params['database_type'] = $config['DBASE_TYPE'];
             $params['source_path'] = $storePath;
             $params['cookie_key'] = $config['_COOKIE_KEY_'];
 			$params['usergroup'] = 1;

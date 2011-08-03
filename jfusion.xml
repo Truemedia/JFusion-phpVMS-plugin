@@ -10,7 +10,7 @@
         <authorEmail>w.penistone@mediacityonline.net</authorEmail>
         <authorUrl>www.mediacityonline.net</authorUrl>
         <version>1.5.6-000</version>
-        <description>PhpVms plugin for JFusion</description>
+        <description>phpVMS plugin for JFusion</description>
         <slave>0</slave>
         <dual_login>0</dual_login>
         <activity>1</activity>
