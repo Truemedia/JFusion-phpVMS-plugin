@@ -9,7 +9,7 @@
  * @package    JFusionPlugins
  * @subpackage PrestaShop
  * @author     JFusion Team <webmaster@jfusion.org>
- * @copyright  2008 JFusion. All rights reserved.
+ * @copyright  2011 JFusion. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.jfusion.org
  */
@@ -27,7 +27,7 @@ defined('_JEXEC') or die('Restricted access');
  * @package    JFusionPlugins
  * @subpackage PrestaShop
  * @author     JFusion Team <webmaster@jfusion.org>
- * @copyright  2008 JFusion. All rights reserved.
+ * @copyright  2011 JFusion. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.jfusion.org
  */

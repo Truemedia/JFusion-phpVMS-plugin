@@ -3,13 +3,13 @@
 <install type="jfusion" version="1.5.1">
         <name>prestashop</name>
         <author>Wade Penistone</author>
-        <creationDate>September 2010</creationDate>
-        <copyright>Copyright GPL (C) 2008 Open Source Matters. All rights
+        <creationDate>August 2011</creationDate>
+        <copyright>Copyright GPL (C) 2011 Open Source Matters. All rights
                 reserved.</copyright>
         <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
         <authorEmail>w.penistone@mediacityonline.net</authorEmail>
         <authorUrl>www.mediacityonline.net</authorUrl>
-        <version>1.5.1-000</version>
+        <version>1.5.6-000</version>
         <description>PrestaShop plugin for JFusion</description>
         <slave>0</slave>
         <dual_login>0</dual_login>
