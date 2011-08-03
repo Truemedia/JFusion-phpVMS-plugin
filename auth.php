@@ -7,7 +7,7 @@
  * 
  * @category   JFusion
  * @package    JFusionPlugins
- * @subpackage PrestaShop
+ * @subpackage PhpVms
  * @author     JFusion Team <webmaster@jfusion.org>
  * @copyright  2011 JFusion. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -19,18 +19,18 @@ defined('_JEXEC') or die('Restricted access');
 
 
 /**
- * JFusion Authentication Class for PrestaShop
+ * JFusion Authentication Class for PhpVms
  * For detailed descriptions on these functions please check the model.abstractauth.php
  * 
  * @category   JFusion
  * @package    JFusionPlugins
- * @subpackage PrestaShop
+ * @subpackage PhpVms
  * @author     JFusion Team <webmaster@jfusion.org>
  * @copyright  2011 JFusion. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.jfusion.org
  */
-class JFusionAuth_prestashop extends JFusionAuth 
+class JFusionAuth_phpvms extends JFusionAuth 
 {
     /**
      * returns the name of this JFusion plugin
@@ -38,7 +38,7 @@ class JFusionAuth_prestashop extends JFusionAuth
      */
     function getJname() 
     {
-        return 'prestashop';
+        return 'phpvms';
     }
     function generateEncryptedPassword($userinfo) {
 	/*

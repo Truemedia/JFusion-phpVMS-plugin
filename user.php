@@ -2,13 +2,13 @@
 
 
 /**
- * JFusion User Class for PrestaShop
+ * JFusion User Class for PhpVms
  * 
  * PHP version 5
  * 
  * @category   JFusion
  * @package    JFusionPlugins
- * @subpackage PrestaShop
+ * @subpackage PhpVms
  * @author     JFusion Team <webmaster@jfusion.org>
  * @copyright  2011 JFusion. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -21,18 +21,18 @@ defined('_JEXEC') or die('Restricted access');
 
 
 /**
- * JFusion User Class for PrestaShop
+ * JFusion User Class for PhpVms
  * For detailed descriptions on these functions please check the model.abstractuser.php
  * 
  * @category   JFusion
  * @package    JFusionPlugins
- * @subpackage PrestaShop
+ * @subpackage PhpVms
  * @author     JFusion Team <webmaster@jfusion.org>
  * @copyright  2011 JFusion. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
  * @link       http://www.jfusion.org
  */
-class JFusionUser_prestashop extends JFusionUser {
+class JFusionUser_phpvms extends JFusionUser {
     function &getUser($userinfo) {
 	    //get the identifier
         $identifier = $userinfo;
@@ -56,10 +56,10 @@ class JFusionUser_prestashop extends JFusionUser {
      */    
     function getJname() 
     {
-        return 'prestashop';
+        return 'phpvms';
     }
     function deleteUser($userinfo) {
-        /* Warning: this function mimics the original prestashop function which is a suggestive deletion, 
+        /* Warning: this function mimics the original phpvms function which is a suggestive deletion, 
 		all user information remains in the table for past reference purposes. To delete everything associated
 		with an account and an account itself, you will have to manually delete them from the table yourself. */
 		// get the identifier
@@ -78,7 +78,7 @@ class JFusionUser_prestashop extends JFusionUser {
 	    $status = array();
         $status['error'] = array();
         $status['debug'] = array();
-	    // use prestashop cookie class and functions to delete cookie
+	    // use phpvms cookie class and functions to delete cookie
 		$params = JFusionFactory::getParams($this->getJname());
 		require_once $params->get('source_path') . DS . "config" . DS . "settings.inc.php";
 	    require($params->get('source_path') . DS . "classes" . DS . "Cookie.php");
@@ -464,7 +464,7 @@ class JFusionUser_prestashop extends JFusionUser {
 	        unset($ps_customer);
 	    }
 		
-		/* enter customer account into prestashop database */ // if all information is validated
+		/* enter customer account into phpvms database */ // if all information is validated
 	    if(isset($ps_customer) && isset($ps_customer_group) && isset($ps_address))
 	    {
 	        $tbp = $params->get('database_prefix');

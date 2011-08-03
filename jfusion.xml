@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE install SYSTEM "http://dev.joomla.org/xml/1.5/component-install.dtd">
 <install type="jfusion" version="1.5.1">
-        <name>prestashop</name>
+        <name>phpvms</name>
         <author>Wade Penistone</author>
         <creationDate>August 2011</creationDate>
         <copyright>Copyright GPL (C) 2011 Open Source Matters. All rights
@@ -10,7 +10,7 @@
         <authorEmail>w.penistone@mediacityonline.net</authorEmail>
         <authorUrl>www.mediacityonline.net</authorUrl>
         <version>1.5.6-000</version>
-        <description>PrestaShop plugin for JFusion</description>
+        <description>PhpVms plugin for JFusion</description>
         <slave>0</slave>
         <dual_login>0</dual_login>
         <activity>1</activity>
@@ -26,12 +26,12 @@
         </files>
         <params addpath="/administrator/components/com_jfusion/elements">
                 <param name="jfusionbox" type="text" default="" label="PLUGIN_GENERAL_DETAILS" description="" />
-                <param name="description" type="text" size="60" default="Presta Shop" description="DESCRIPTION"/>
-                <param name="source_url" type="text" size="60" default="http://www.yourdomain.com/prestashop/" description="SOURCE_URL" />
+                <param name="description" type="text" size="60" default="Php Vms" description="DESCRIPTION"/>
+                <param name="source_url" type="text" size="60" default="http://www.yourdomain.com/phpvms/" description="SOURCE_URL" />
                 <param name="source_path" type="text" size="60" default="" description="SOURCE_PATH" />
 
 
-                <param name="    " type="helptext" default="In order to disable registration in PrestaShop you must modify a core file currently to add a piece of code to disable it. The code extract and instructions can be found on the JFusion website"/>    
+                <param name="    " type="helptext" default="In order to disable registration in PhpVms you must modify a core file currently to add a piece of code to disable it. The code extract and instructions can be found on the JFusion website"/>    
     
     <param name="cookie_domain" type="text" size="60" default="" description="COOKIE_DOMAIN" />
                 <param name="cookie_path" type="text" size="20" default="/" description="COOKIE_PATH" />

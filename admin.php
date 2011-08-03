@@ -7,7 +7,7 @@
  *
  * @category   JFusion
  * @package    JFusionPlugins
- * @subpackage PrestaShop
+ * @subpackage PhpVms
  * @author     JFusion Team <webmaster@jfusion.org>
  * @copyright  2011 JFusion. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -20,12 +20,12 @@ defined('_JEXEC') or die('Restricted access');
 
 
 /**
- * JFusion Admin Class for PrestaShop
+ * JFusion Admin Class for PhpVms
  * For detailed descriptions on these functions please check the model.abstractadmin.php
  *
  * @category   JFusion
  * @package    JFusionPlugins
- * @subpackage PrestaShop
+ * @subpackage PhpVms
  * @author     JFusion Team <webmaster@jfusion.org>
  * @copyright  2011 JFusion. All rights reserved.
  * @license    http://www.gnu.org/copyleft/gpl.html GNU/GPL
@@ -33,7 +33,7 @@ defined('_JEXEC') or die('Restricted access');
  */
 
 
-class JFusionAdmin_prestashop extends JFusionAdmin
+class JFusionAdmin_phpvms extends JFusionAdmin
 {
     /**
      * returns the name of this JFusion plugin
@@ -41,7 +41,7 @@ class JFusionAdmin_prestashop extends JFusionAdmin
      */
     function getJname()
     {
-        return 'prestashop';
+        return 'phpvms';
     }
     function getTablename() {
         return 'customer';
@@ -88,7 +88,7 @@ class JFusionAdmin_prestashop extends JFusionAdmin
 	}
 	
 	function setupFromPath($storePath) {
-	    $config = JFusionAdmin_prestashop::loadSetup($storePath);
+	    $config = JFusionAdmin_phpvms::loadSetup($storePath);
         if (!empty($config)) {
             //save the parameters into array
             $params = array();
@@ -136,7 +136,7 @@ class JFusionAdmin_prestashop extends JFusionAdmin
         $db->setQuery($query);
         //getting the default language to load groups
         $default_language = $db->loadResult();
-        //prestashop uses two group categories which are employees and customers, each have there own groups to access either the front or back end
+        //phpvms uses two group categories which are employees and customers, each have there own groups to access either the front or back end
         /*
           Customers only for this plugin
         */
