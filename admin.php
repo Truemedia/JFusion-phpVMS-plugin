@@ -49,9 +49,9 @@ class JFusionAdmin_phpvms extends JFusionAdmin
     function loadSetup($storePath) {
         //check for trailing slash and generate file path
         if (substr($storePath, -1) == DS) {
-            $myfile = $storePath . 'config/settings.inc.php';
+            $myfile = $storePath . 'core/local.config.php';
         } else {
-            $myfile = $storePath . DS . 'config/settings.inc.php';
+            $myfile = $storePath . DS . 'core/local.config.php';
         }
         if (($file_handle = @fopen($myfile, 'r')) === false) {
             JError::raiseWarning(500, JText::_('WIZARD_FAILURE') . ": $myfile " . JText::_('WIZARD_MANUAL'));
