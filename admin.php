@@ -44,7 +44,7 @@ class JFusionAdmin_phpvms extends JFusionAdmin
         return 'phpvms';
     }
     function getTablename() {
-        return 'customer';
+        return 'pilots';
     }
     function loadSetup($storePath) {
         //check for trailing slash and generate file path
@@ -99,8 +99,7 @@ class JFusionAdmin_phpvms extends JFusionAdmin
             $params['database_prefix'] = $config['TABLE_PREFIX'];
             $params['database_type'] = $config['DBASE_TYPE'];
             $params['source_path'] = $storePath;
-            $params['cookie_key'] = $config['_COOKIE_KEY_'];
-			$params['usergroup'] = 1;
+			$params['usergroup'] = 2; // active pilots
 			//return the parameters so it can be saved permanently
             return $params;
         }
@@ -110,7 +109,7 @@ class JFusionAdmin_phpvms extends JFusionAdmin
         $db = JFusionFactory::getDatabase($this->getJname());
 		$params = JFusionFactory::getParams($this->getJname());
 		$tbp = $params->get('database_prefix');
-        $query = "SELECT email as email, id_customer as userid from " . $tbp . "customer WHERE email NOT LIKE '' and email IS NOT null";
+        $query = "SELECT email as email, id_customer as userid from " . $tbp . "pilots WHERE email NOT LIKE '' and email IS NOT null";
         $db->setQuery($query);
         //getting the results
         $userlist = $db->loadObjectList();
@@ -121,7 +120,7 @@ class JFusionAdmin_phpvms extends JFusionAdmin
         $db = JFusionFactory::getDatabase($this->getJname());
 		$params = JFusionFactory::getParams($this->getJname());
 		$tbp = $params->get('database_prefix');
-        $query = "SELECT count(*) from " . $tbp . "customer WHERE email NOT LIKE '' and email IS NOT null";
+        $query = "SELECT count(*) from " . $tbp . "pilots WHERE email NOT LIKE '' and email IS NOT null";
         $db->setQuery($query);
         //getting the results
         $no_users = $db->loadResult();
@@ -136,7 +135,7 @@ class JFusionAdmin_phpvms extends JFusionAdmin
         $db->setQuery($query);
         //getting the default language to load groups
         $default_language = $db->loadResult();
-        //phpvms uses two group categories which are employees and customers, each have there own groups to access either the front or back end
+        //phpvms uses two default groups which are admins and pilots, each have there own groups to access either the front or back end
         /*
           Customers only for this plugin
         */
