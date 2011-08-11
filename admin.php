@@ -146,17 +146,7 @@ class JFusionAdmin_phpvms extends JFusionAdmin
         return $result;
     }
     function getDefaultUsergroup() {
-	    $db = JFusionFactory::getDatabase($this->getJname());
-	    $params = JFusionFactory::getParams($this->getJname());
-		$tbp = $params->get('database_prefix');
-        //we want to output the usergroup name
-        $query = "SELECT value FROM " . $tbp . "configuration WHERE name IN ('PS_LANG_DEFAULT');";
-        $db->setQuery($query);
-        //getting the default language to load groups
-        $default_language = $db->loadResult();
-        $query = "SELECT name as name from " . $tbp . "group_lang WHERE id_lang IN ('" . $default_language . "') AND id_group IN ('1')";
-        $db->setQuery($query);
-		return $db->loadResult();
+	    return "Pilots";
     }
     function allowRegistration() {
         //you cannot disable registration
