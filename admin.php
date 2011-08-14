@@ -150,7 +150,7 @@ class JFusionAdmin_phpvms extends JFusionAdmin
     }
     function allowRegistration() {
         //you cannot disable registration
-            $result = true;
+            $result = false;
             return $result;
     }
 	function allowEmptyCookiePath(){
