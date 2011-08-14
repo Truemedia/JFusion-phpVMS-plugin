@@ -40,10 +40,11 @@ class JFusionAuth_phpvms extends JFusionAuth
     {
         return 'phpvms';
     }
-    function generateEncryptedPassword($userinfo) {
+     function generateEncryptedPassword($userinfo) {
 	/*
         $params = JFusionFactory::getParams($this->getJname());
-        $the_crypt = md5($params->get('cookie_key') . $userinfo->password_clear);
+        $salt = md5(date('His'));
+		$the_crypt = md5($userinfo->password_clear . $salt);
         return $the_crypt;*/
     }
 }
