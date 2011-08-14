@@ -80,23 +80,22 @@ class JFusionUser_phpvms extends JFusionUser {
         $status['debug'] = array();
 	    // use phpvms cookie class and functions to delete cookie
 		$params = JFusionFactory::getParams($this->getJname());
-		require_once $params->get('source_path') . DS . "config" . DS . "settings.inc.php";
-	    require($params->get('source_path') . DS . "classes" . DS . "Cookie.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Blowfish.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Tools.php");
-		require($params->get('source_path') . DS . "classes" . DS . "ObjectModel.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Db.php");
-		require($params->get('source_path') . DS . "classes" . DS . "SubDomain.php");
-        $cookie = new cookie('ps');
+		$tbp = $params->get('database_prefix');
+		/*$query="SELECT pilotid FROM " . $tbp . "pilots WHERE email = '" . $userinfo->email . "'";
+        $db->setQuery($query);
+		$pilotid = $db->loadResult();
+		$query="DELETE FROM ".$tbp."sessions WHERE pilotid = '" . $pilotid . "'";
 		$status["error"][] = "Random debugging text";
-	    if(!$cookie->mylogout())
+	    if(!$db->setQuery($query))
 		{
 		 $status["error"][] = "Error Could not delete session, doesn't exist";
 		}
 		else
 		{
 		 $status["debug"][] = "Deleted session and session data";
-		}
+		}*/
+		//$_COOKIE['VMSAUTH'] = '';
+		setcookie('VMSAUTH', "2|1|127.0.0.1", time() + 3600*24*30);
 		return $status;
     }
     function createSession($userinfo, $options, $framework = true) {
