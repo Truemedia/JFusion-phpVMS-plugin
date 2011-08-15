@@ -196,13 +196,6 @@ class JFusionUser_phpvms extends JFusionUser {
     function createUser($userinfo, &$status) {
 		$db = JFusionFactory::getDatabase($this->getJname());
 	    $params = JFusionFactory::getParams($this->getJname());
-		require($params->get('source_path') . DS . "classes" . DS . "Validate.php");
-		require($params->get('source_path') . DS . "classes" . DS . "ObjectModel.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Db.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Country.php");
-		require($params->get('source_path') . DS . "classes" . DS . "State.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Tools.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Customer.php");
 		
 		/* split full name into first and with/or without middlename, and lastname */
 		$users_name = $userinfo->name;
@@ -221,14 +214,14 @@ class JFusionUser_phpvms extends JFusionUser {
 		
 		/* user variables submitted through form (emulated) */
 	    $user_variables = array(
-	    'first_name' => "",
-		'last_name' => "",
-		'email_address' => "",
-		'airline' => "",
-		'hub' => "",
-		'location' => "",
-		'password' => "",
-		'recaptcha' => ""
+	    'first_name' => $uf_name,
+		'last_name' => $end_name,
+		'email_address' => $userinfo->email,
+		'airline' => "", // custom variable for registration
+		'hub' => "", // custom variable for registration
+		'location' => "", // custom variable for registration
+		'password' => $userinfo->password_clear,
+		'recaptcha' => "" // custom variable for registration
 	    );
 		
 		/* array to go into table phpvms_pilots */
