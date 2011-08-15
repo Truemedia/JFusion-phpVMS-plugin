@@ -258,36 +258,13 @@ class JFusionUser_phpvms extends JFusionUser {
  		'lastip' => "" // alphanumeric values between 6 and 25 characters long
 		);
 		
-		/* array to go into table ps_customer_group */
-	    $ps_customer_group = array(
-	    'id_customer' => "NULL", // column 0 (id_customer)
-	    'id_group' => $params->get('usergroup') // column 1 (id_group)
-	    );
-		
-		/* array to go into table ps_address */
-	    $ps_address = array(
-	    'id_address' => "NULL", // column 0 (id_address)
-	    'id_country' => $user_variables['id_country'], // column 1 (id_country)
-	    'id_state' => $user_variables['id_state'], // column 2 (id_state)
-	    'id_customer' => "NULL", // column 3 (id_customer)
-	    'id_manufacturer' => 0, // column 4 (id_manufacturer)
-	    'id_supplier' => 0, // column 5 (id_supplier)
-	    'alias' => $user_variables['alias'], // column 6 (alias)
-	    'company' => $user_variables['company'], // column 7 (company)
-	    'lastname' => $user_variables['customer_lastname'], // column 8 (lastname)
-	    'firstname' => $user_variables['customer_firstname'], // column 9 (firstname)
-	    'address1' => $user_variables['address1'], // column 10 (address1)
-	    'address2' => $user_variables['address2'], // column 11 (address2)
-	    'postcode' => $user_variables['postcode'], // column 12 (postcode)
-	    'city' => $user_variables['city'], // column 13 (city)
-	    'other' => $user_variables['other'], // column 14 (other)
-	    'phone' => $user_variables['phone'], // column 15 (phone)
-	    'phone_mobile' => $user_variables['phone_mobile'], // column 16 (phone_mobile)
-	    'date_add' => date("Y-m-d h:m:s"), // column 17 (date_add)
-	    'date_upd' => date("Y-m-d h:m:s"), // column 18 (date_upd)
-	    'active' => 1, // column 19 (active)
-	    'deleted' => 0 // column 20 (deleted)
-	    );
+		/* array to go into table phpvms_sessions */
+	    $phpvms_sessions = array(
+	    'id' => "",	// numeric character between 1 and 11 characters long
+	    'pilotid' => "",	// numeric character between 1 and 11 characters long
+ 		'ipaddress' => "", // alphanumeric values between 6 and 25 characters long
+ 		'logintime' => "" // date and time in YYYY-MM-DD HH:MM:SS format
+		);
 		
 		/* safe data check and validation of array $user_variables
 	    no other unique variables are used so this check only includes these */
