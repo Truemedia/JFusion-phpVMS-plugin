@@ -226,29 +226,29 @@ class JFusionUser_phpvms extends JFusionUser {
 		
 		/* array to go into table phpvms_pilots */
 	    $phpvms_pilots = array(
-	    'pilotid' => "",	// numeric character between 1 and 11 characters long
- 		'firstname' => "", // alphanumeric values between 6 and 25 characters long
- 		'lastname' => "", // alphanumeric values between 6 and 25 characters long
- 		'email' => "", // alphanumeric values between 6 and 100 characters long
- 		'code' => "", // letters 3 characters long
- 		'location' => "", // alphanumeric values between 6 and 32 characters long
- 		'hub' => "",	// alphanumeric value 4 characters long
- 		'password' => "", // alphanumeric values between 6 and 32 characters long
- 		'salt' => "", // alphanumeric values between 6 and 32 characters long
+	    'pilotid' => "", // numeric character between 1 and 11 characters long
+ 		'firstname' => $user_variables['first_name'], // alphanumeric values between 6 and 25 characters long
+ 		'lastname' => $user_variables['last_name'], // alphanumeric values between 6 and 25 characters long
+ 		'email' => $user_variables['email_address'], // alphanumeric values between 6 and 100 characters long
+ 		'code' => "AAA", // letters 3 characters long
+ 		'location' => "US", // alphanumeric values between 6 and 32 characters long
+ 		'hub' => "", // alphanumeric value 4 characters long
+ 		'password' => md5($user_variables['password'].$phpvms_pilots['salt']), // alphanumeric values between 6 and 32 characters long
+ 		'salt' => md5(date('His')), // alphanumeric values between 6 and 32 characters long
  		'bgimage' => "", // alphanumeric values between 6 and 30 characters long
- 		'lastlogin' => "", // date in YYYY-MM-DD format
- 		'totalflights' => "", // numeric value between 1 and 11 characters long
- 		'totalhours' => "", // binary
- 		'totalpay' => "", // binary
- 		'transferhours' => "", // binary
- 		'rankid' => "", // numeric value between 1 and 11 characters long
+ 		'lastlogin' => "0000-00-00", // date in YYYY-MM-DD format
+ 		'totalflights' => 0, // numeric value between 1 and 11 characters long
+ 		'totalhours' => 0, // binary
+ 		'totalpay' => 0, // binary
+ 		'transferhours' => 0, // binary
+ 		'rankid' => 1, // numeric value between 1 and 11 characters long
  		'rank' => "", // alphanumeric values between 6 and 32 characters long
- 		'ranklevel' => "", // numeric value between 1 and 11 characters long
- 		'confirmed' => "", // numeric value 5 characters long
- 		'retired' => "",	// numeric value 6 characters long
- 		'joindate' => "", // date and time in YYYY-MM-DD HH:MM:SS format
- 		'lastpirep' => "", // date and time in YYYY-MM-DD HH:MM:SS format
- 		'lastip' => "" // alphanumeric values between 6 and 25 characters long
+ 		'ranklevel' => 1, // numeric value between 1 and 11 characters long
+ 		'confirmed' => 1, // numeric value 5 characters long
+ 		'retired' => 0,	// numeric value 6 characters long
+ 		'joindate' => date("Y-m-d h:m:s"), // date and time in YYYY-MM-DD HH:MM:SS format
+ 		'lastpirep' => date("Y-m-d h:m:s"), // date and time in YYYY-MM-DD HH:MM:SS format
+ 		'lastip' => $_SERVER['REMOTE_ADDR']; // alphanumeric values between 6 and 25 characters long
 		);
 		
 		/* array to go into table phpvms_sessions */
