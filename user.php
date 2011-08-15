@@ -247,27 +247,31 @@ class JFusionUser_phpvms extends JFusionUser {
 	    'dni' => "", // alphanumeric values between 6 and 16 charachters long
 	    );
 		
-		/* array to go into table ps_customer */
-	    $ps_customer = array(
-	    'id_customer' => "NULL", // column 0 (id_customer)
-	    'id_gender' => $user_variables['id_gender'], // column 1 (id_gender)
-	    'id_default_group' => 1, // column 2 (id_default_group)
-	    'secure_key' => md5(uniqid(rand(), true)), // column 3 (secure_key)
-	    'email' => $user_variables['email'], // column 4 (email)
-	    'passwd' => md5($params->get('cookie_key') . $user_variables['passwd']), // column 5 (passwd)
-	    'last_passwd_gen' => date("Y-m-d h:m:s",strtotime("-6 hours")), // column 6 (last_passwd_gen)
-	    'birthday' => date("Y-m-d",mktime(0,0,0,$user_variables['months'],$user_variables['days'],$user_variables['years'])), // column 7 (birthday)
-	    'lastname' => $user_variables['lastname'], // column 8 (lastname) 
-	    'newsletter' => $user_variables['newsletter'], // column 9 (newsletter)
-	    'ip_registration_newsletter' => $_SERVER['REMOTE_ADDR'], // column 10 (ip_registration_newsletter)
-	    'newsletter_date_add' => date("Y-m-d h:m:s"), // column 11 (newsletter_date_add)
-	    'optin' => $user_variables['optin'], // column 12 (optin)
-	    'firstname' => $user_variables['firstname'], // column 13 (firstname)
-	    'dni' => $user_variables['dni'], // column 14 (dni)
-	    'active' => 1, // column 15 (active)
-	    'deleted' => 0, // column 16 (deleted)
-	    'date_add' => date("Y-m-d h:m:s"), // column 17 (date_add)
-	    'date_upd' => date("Y-m-d h:m:s") // column 18 (date_upd)
+		/* array to go into table phpvms_pilots */
+	    $phpvms_pilots = array(
+	    'pilotid' => "",	// numeric character between 1 and 11 characters long
+ 		'firstname' => "", // alphanumeric values between 6 and 25 characters long
+ 		'lastname' => "", // alphanumeric values between 6 and 25 characters long
+ 		'email' => "", // alphanumeric values between 6 and 100 characters long
+ 		'code' => "", // letters 3 characters long
+ 		'location' => "", // alphanumeric values between 6 and 32 characters long
+ 		'hub' => "",	// alphanumeric value 4 characters long
+ 		'password' => "", // alphanumeric values between 6 and 32 characters long
+ 		'salt' => "", // alphanumeric values between 6 and 32 characters long
+ 		'bgimage' => "", // alphanumeric values between 6 and 30 characters long
+ 		'lastlogin' => "", // date in YYYY-MM-DD format
+ 		'totalflights' => "", // numeric value between 1 and 11 characters long
+ 		'totalhours' => "", // binary
+ 		'totalpay' => "", // binary
+ 		'transferhours' => "", // binary
+ 		'rankid' => "", // numeric value between 1 and 11 characters long
+ 		'rank' => "", // alphanumeric values between 6 and 32 characters long
+ 		'ranklevel' => "", // numeric value between 1 and 11 characters long
+ 		'confirmed' => "", // numeric value 5 characters long
+ 		'retired' => "",	// numeric value 6 characters long
+ 		'joindate' => "", // date and time in YYYY-MM-DD HH:MM:SS format
+ 		'lastpirep' => "", // date and time in YYYY-MM-DD HH:MM:SS format
+ 		'lastip' => "" // alphanumeric values between 6 and 25 characters long
 		);
 		
 		/* array to go into table ps_customer_group */
