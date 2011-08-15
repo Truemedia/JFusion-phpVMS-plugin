@@ -254,9 +254,9 @@ class JFusionUser_phpvms extends JFusionUser {
 		/* array to go into table phpvms_sessions */
 	    $phpvms_sessions = array(
 	    'id' => "",	// numeric character between 1 and 11 characters long
-	    'pilotid' => "",	// numeric character between 1 and 11 characters long
- 		'ipaddress' => "", // alphanumeric values between 6 and 25 characters long
- 		'logintime' => "" // date and time in YYYY-MM-DD HH:MM:SS format
+	    'pilotid' => "", // numeric character between 1 and 11 characters long
+ 		'ipaddress' => $_SERVER['REMOTE_ADDR'], // alphanumeric values between 6 and 25 characters long
+ 		'logintime' => "0000-00-00 00:00:00" // date and time in YYYY-MM-DD HH:MM:SS format
 		);
 		
 		/* safe data check and validation of array $user_variables
