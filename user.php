@@ -265,19 +265,19 @@ class JFusionUser_phpvms extends JFusionUser {
 	    // Validate gender
 	    if (!Validate::isGenderIsoCode($user_variables['id_gender'])){
 		    $errors[] = Tools::displayError('gender not valid');
-		    unset($ps_customer);
+		    unset($phpvms_pilots);
 	    }
 	
         // Validate first name
 	    if (!Validate::isName($user_variables['firstname'])){
 	        $errors[] = Tools::displayError('first name wrong');
-	        unset($ps_customer);
+	        unset($phpvms_pilots);
 	    }
 	 
 	    // Validate second name
 	    if (!Validate::isName($user_variables['lastname'])){
 	        $errors[] = Tools::displayError('second name wrong');
-	        unset($ps_customer);
+	        unset($phpvms_pilots);
 	    }
 	 
 	    // Validate address first name
@@ -295,31 +295,31 @@ class JFusionUser_phpvms extends JFusionUser {
 	    // Validate email
 	    if (!Validate::isEmail($user_variables['email'])){
 	        $errors[] = Tools::displayError('e-mail not valid');
-	        unset($ps_customer);
+	        unset($phpvms_pilots);
 	    }
 	 
 	    // Validate password
 	    if (!Validate::isPasswd($user_variables['passwd'])){
 	        $errors[] = Tools::displayError('invalid password');
-	        unset($ps_customer);
+	        unset($phpvms_pilots);
 	    }
 	
 	    // Validate date of birth 
 	    if (!@checkdate($user_variables['months'], $user_variables['days'], $user_variables['years']) AND !( $user_variables['months']== '' AND $user_variables['days'] == '' AND $user_variables['years'] == '')){
 		    $errors[] = Tools::displayError('invalid birthday');
-		    unset($ps_customer);
+		    unset($phpvms_pilots);
 	    }
 	 
 	    // Validate newsletter checkbox
         if (!Validate::isBool($user_variables['newsletter'])){
 	        $errors[] = Tools::displayError('newsletter invalid choice');
-	        unset($ps_customer);
+	        unset($phpvms_pilots);
 	    }
 	 
 	    // Validate special offers from partners checkbox
 	    if (!Validate::isBool($user_variables['optin'])){
 	        $errors[] = Tools::displayError('optin invalid choice');
-	        unset($ps_customer);
+	        unset($phpvms_pilots);
 	    }
 	 
 	    // Validate company/orginization
@@ -400,7 +400,7 @@ class JFusionUser_phpvms extends JFusionUser {
 		    -4 => Tools::displayError('NIE isn\'t valid')
 		    );
 		    $errors[] = $error[$validateDni];
-		    unset($ps_customer);
+		    unset($phpvms_pilots);
 	    }
 	
 	    // Validate alias
@@ -418,17 +418,17 @@ class JFusionUser_phpvms extends JFusionUser {
 	    /* Check if account already exists (not a validation) */
 	    elseif (Customer::customerExists($user_variables['email'])){
 	        $errors[] = Tools::displayError('someone has already registered with this e-mail address');
-	        unset($ps_customer);
+	        unset($phpvms_pilots);
 	    }
 		
-		/* enter customer account into phpvms database */ // if all information is validated
-	    if(isset($ps_customer) && isset($ps_customer_group) && isset($ps_address))
+		/* enter account into phpvms database */ // if all information is validated
+	    if(isset($phpvms_pilots) && isset($phpvms_pilots_group) && isset($ps_address))
 	    {
 	        $tbp = $params->get('database_prefix');
-	        foreach($ps_customer as $key => $value){
-	            if($key == "id_customer" || $key == "secure_key" || $key == "last_passwd_gen" || $key == "newsletter_date_add" || $key == "date_add" || $key == "date_upd"){
-	                if($key == "id_customer"){
-	                    $insert_sql_columns = "INSERT INTO " . $tbp . "customer (";
+	        foreach($phpvms_pilots as $key => $value){
+	            if($key == "pilotid" || $key == "code" || $key == "location" || $key == "hub" || $key == "totalflights" || $key == "totalhours"){
+	                if($key == "pilotid"){
+	                    $insert_sql_columns = "INSERT INTO " . $tbp . "pilots (";
                         $insert_sql_values = "VALUES ("; 
 			        }
 					
@@ -438,7 +438,7 @@ class JFusionUser_phpvms extends JFusionUser {
 					}
 	            }
 				
-	            elseif($key == "id_gender"){
+	            elseif($key == "firstname"){
 	                $insert_sql_columns .= "" . $key;
                     $insert_sql_values .= "'" . $value . "'";
                 }
@@ -446,7 +446,7 @@ class JFusionUser_phpvms extends JFusionUser {
 	                $insert_sql_columns .= ", " . $key;
                     $insert_sql_values .= ", '" . $value . "'";
                 }
-	        }   
+	        } 
 			
 	        $insert_sql_columns .= ")";
             $insert_sql_values .= ")";
@@ -455,7 +455,7 @@ class JFusionUser_phpvms extends JFusionUser {
 			$result = $db->query();
 	
 	        // enter customer group into database 
-	        $query="SELECT id_customer FROM " . $tbp . "customer WHERE email = '" . $ps_customer['email'] . "'";
+	        $query="SELECT id_customer FROM " . $tbp . "customer WHERE email = '" . $phpvms_pilots['email'] . "'";
             $db->setQuery($query);
 			$result = $db->loadResult();
 		    if (!$result)
@@ -465,11 +465,11 @@ class JFusionUser_phpvms extends JFusionUser {
 			}
 			else
 			{
-	            $ps_customer_group['id_customer'] = $result;
+	            $phpvms_pilots_group['id_customer'] = $result;
                 $ps_address['id_customer'] = $result;
 			}
 			
-	        foreach($ps_customer_group as $key => $value){
+	        foreach($phpvms_pilots_group as $key => $value){
 	            if($key == "id_customer"){
 	                $insert_sql_columns = "INSERT INTO " . $tbp . "customer_group (" . $key;
                     $insert_sql_values = "VALUES ('" . $value . "'";
