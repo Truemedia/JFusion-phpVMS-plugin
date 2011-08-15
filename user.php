@@ -221,30 +221,14 @@ class JFusionUser_phpvms extends JFusionUser {
 		
 		/* user variables submitted through form (emulated) */
 	    $user_variables = array(
-	    'id_gender' => "1", // value of either 1 for male, 2 for female
-	    'firstname' => $uf_name, // alphanumeric values between 6 and 32 charachters long 
-	    'lastname' => $end_name, // alphanumeric values between 6 and 32 charachters long 
-	    'customer_firstname' => $uf_name, // alphanumeric values between 6 and 32 charachters long 
-	    'customer_lastname' => $end_name, // alphanumeric values between 6 and 32 charachters long 
-	    'email' => $userinfo->email, // alphanumeric values aswell as @ and . symbols between 6 and 128 charachters long 
-	    'passwd' => $userinfo->password_clear, // alphanumeric values between 6 and 32 charachters long
-	    'days' => "01", // numeric charachter between 1 and 31
-	    'months' => "01", // numeric charachter between 1 and 12
-	    'years' => "2000", // numeric charachter between 1900 and latest year
-	    'newsletter' => 0, // value of either 0 for no newsletters, or 1 to recieve newsletters
-	    'optin' => 0, // value of either 0 for no third party options, or 1 to recieve third party options
-	    'company' => "", // alphanumeric values between 6 and 32 charachters long
-	    'address1' => "Update with your real address", // alphanumeric values between 6 and 128 charachters long
-	    'address2' => "", // alphanumeric values between 6 and 128 charachters long
-	    'postcode' => "Postcode", // alphanumeric values between 7 and 12 charachters long
-	    'city' => "Not known", // alpha values between 6 and 64 charachters long
-	    'id_country' => "17", // numeric charachter between 1 and 244 (normal preset)
-	    'id_state' => "0", // numeric charachter between 1 and 65 (normal preset)
-	    'other' => "", // alphanumeric values with mysql text limit charachters long
-	    'phone' => "", // numeric values between 11 and 16 chrachters long
-	    'phone_mobile' => "", // numeric values between 11 and 16 chrachters long
-	    'alias' => "My address", // alphanumeric values between 6 and 32 charachters long
-	    'dni' => "", // alphanumeric values between 6 and 16 charachters long
+	    'first_name' => "",
+		'last_name' => "",
+		'email_address' => "",
+		'airline' => "",
+		'hub' => "",
+		'location' => "",
+		'password' => "",
+		'recaptcha' => ""
 	    );
 		
 		/* array to go into table phpvms_pilots */
