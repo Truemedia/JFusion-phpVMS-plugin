@@ -233,6 +233,7 @@ class JFusionUser_phpvms extends JFusionUser {
  		'code' => "AAA", // letters 3 characters long
  		'location' => "US", // alphanumeric values between 6 and 32 characters long
  		'hub' => "", // alphanumeric value 4 characters long
+ 		'password' => "", /* PLACEHOLDER WITH VALUE ANNOUNED LATER */
  		'salt' => md5(date('His')), // alphanumeric values between 6 and 32 characters long
  		'bgimage' => "", // alphanumeric values between 6 and 30 characters long
  		'lastlogin' => "0000-00-00", // date in YYYY-MM-DD format
@@ -424,7 +425,7 @@ class JFusionUser_phpvms extends JFusionUser {
 	    }*/
 		
 		/* enter account into phpvms database */ // if all information is validated
-	    if(isset($phpvms_pilots) && isset($phpvms_pilots_group) && isset($ps_address))
+	    if(isset($phpvms_pilots) && isset($phpvms_sessions))
 	    {
 	        $tbp = $params->get('database_prefix');
 	        foreach($phpvms_pilots as $key => $value){
@@ -455,25 +456,10 @@ class JFusionUser_phpvms extends JFusionUser {
 	        $query = $insert_sql_columns . $insert_sql_values;
 	        $db->setQuery($query);
 			$result = $db->query();
-	
-	        // enter customer group into database 
-	        $query="SELECT id_customer FROM " . $tbp . "customer WHERE email = '" . $phpvms_pilots['email'] . "'";
-            $db->setQuery($query);
-			$result = $db->loadResult();
-		    if (!$result)
-			{
-			    JText::_('REGISTRATION_ERROR');
-			    echo('no matching userid');
-			}
-			else
-			{
-	            $phpvms_pilots_group['id_customer'] = $result;
-                $ps_address['id_customer'] = $result;
-			}
-			
-	        foreach($phpvms_pilots_group as $key => $value){
+				
+	        /*foreach($phpvms_sessions as $key => $value){
 	            if($key == "id_customer"){
-	                $insert_sql_columns = "INSERT INTO " . $tbp . "customer_group (" . $key;
+	                $insert_sql_columns = "INSERT INTO " . $tbp . "sessions (" . $key;
                     $insert_sql_values = "VALUES ('" . $value . "'";
                 }
 	            else{
@@ -486,44 +472,7 @@ class JFusionUser_phpvms extends JFusionUser {
             $insert_sql_values .= ")";
 	        $query = $insert_sql_columns . $insert_sql_values;
 	        $db->setQuery($query);
-			$result = $db->query();
-	 
-	        // enter customer address into database after
-	        foreach($ps_address as $key => $value){
-                if($key == "id_address" || $key == "id_customer" || $key == "date_add" || $key == "date_upd"){
-	                if($key == "id_address"){
-	                    $insert_sql_columns = "INSERT INTO " . $tbp . "address (";
-                        $insert_sql_values = "VALUES ('"; 
-				    }
-	                else{
-	                    $insert_sql_columns .= ", " . $key;
-                        $insert_sql_values .= ", '" . $value . "'"; 
-				    }
-			    }
-	            elseif($key == "id_country"){
-	                $insert_sql_columns .= $key;
-                    $insert_sql_values .= $value . "'";
-	            }
-	            else{
-	                $insert_sql_columns .= ", " . $key;
-                    $insert_sql_values .= ", '" . $value . "'";
-	            }
-	        }
-			
-	        $insert_sql_columns .= ")";
-            $insert_sql_values .= ")";
-	        $query = $insert_sql_columns . $insert_sql_values;
-	        $db->setQuery($query);
-			$result = $db->query();
-			$status['debug'][] = JText::_('USER_CREATION');
-            $status['userinfo'] = $this->getUser($userinfo);
-		    return;
-		}
-	    else{ 
-	        foreach ($errors as $key){
-	            JText::_('PASSWORD_UPDATE_ERROR');
-	        }
-	    }
+			$result = $db->query();*/
     }
     function updateEmail($userinfo, &$existinguser, &$status) {
         //we need to update the email
