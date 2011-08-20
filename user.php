@@ -199,14 +199,14 @@ class JFusionUser_phpvms extends JFusionUser {
 		
 		/* split full name into first and with/or without middlename, and lastname */
 		$users_name = $userinfo->name;
-		list( $uf_name, $um_name, $ul_name ) = explode( ' ', $users_name, 3 );
-		if ( is_null($ul_name) ) // meaning only two names were entered
+		list($uf_name, $ul_name) = preg_split('/\s+(?=[^\s]+$)/', $users_name, 2);
+		if (is_null($ul_name)) // meaning only two names were entered
 		{
 			$end_name = $um_name;
 		}
 		else
 		{
-			$end_name = explode( ' ', $ul_name );
+			$end_name = explode(' ', $ul_name);
 			$size = sizeof($ul_name);
 			$end_name = $ul_name[$size-1];
 		}
@@ -216,7 +216,7 @@ class JFusionUser_phpvms extends JFusionUser {
 	    $user_variables = array(
 	    'first_name' => $uf_name,
 		'last_name' => $end_name,
-		'email_address' => $userinfo->email,
+		'email_address' => $user_variables['email_address'], // alphanumeric values between 6 and 100 characters long
 		'airline' => "", // custom variable for registration
 		'hub' => "", // custom variable for registration
 		'location' => "", // custom variable for registration
@@ -233,7 +233,6 @@ class JFusionUser_phpvms extends JFusionUser {
  		'code' => "AAA", // letters 3 characters long
  		'location' => "US", // alphanumeric values between 6 and 32 characters long
  		'hub' => "", // alphanumeric value 4 characters long
- 		'password' => md5($user_variables['password'].$phpvms_pilots['salt']), // alphanumeric values between 6 and 32 characters long
  		'salt' => md5(date('His')), // alphanumeric values between 6 and 32 characters long
  		'bgimage' => "", // alphanumeric values between 6 and 30 characters long
  		'lastlogin' => "0000-00-00", // date in YYYY-MM-DD format
@@ -248,8 +247,11 @@ class JFusionUser_phpvms extends JFusionUser {
  		'retired' => 0,	// numeric value 6 characters long
  		'joindate' => date("Y-m-d h:m:s"), // date and time in YYYY-MM-DD HH:MM:SS format
  		'lastpirep' => date("Y-m-d h:m:s"), // date and time in YYYY-MM-DD HH:MM:SS format
- 		'lastip' => $_SERVER['REMOTE_ADDR']; // alphanumeric values between 6 and 25 characters long
+ 		'lastip' => $_SERVER['REMOTE_ADDR'] // alphanumeric values between 6 and 25 characters long
 		);
+		
+		/* DATABASE ORDER CHANGED IN PASSWORD AND SALT VARIABLES TO AVOID MENTIONING ARRAY ITEM BEFORE DECLARED */
+		$phpvms_pilots['password'] = md5($user_variables['password'].$phpvms_pilots['salt']); // alphanumeric values between 6 and 32 characters long
 		
 		/* array to go into table phpvms_sessions */
 	    $phpvms_sessions = array(
@@ -263,70 +265,70 @@ class JFusionUser_phpvms extends JFusionUser {
 	    no other unique variables are used so this check only includes these */
 	
 	    // Validate gender
-	    if (!Validate::isGenderIsoCode($user_variables['id_gender'])){
+	    /*if (!Validate::isGenderIsoCode($user_variables['id_gender'])){
 		    $errors[] = Tools::displayError('gender not valid');
 		    unset($phpvms_pilots);
-	    }
+	    }*/
 	
         // Validate first name
-	    if (!Validate::isName($user_variables['firstname'])){
+	    /*if (!Validate::isName($user_variables['firstname'])){
 	        $errors[] = Tools::displayError('first name wrong');
 	        unset($phpvms_pilots);
-	    }
+	    }*/
 	 
 	    // Validate second name
-	    if (!Validate::isName($user_variables['lastname'])){
+	    /*if (!Validate::isName($user_variables['lastname'])){
 	        $errors[] = Tools::displayError('second name wrong');
 	        unset($phpvms_pilots);
-	    }
+	    }*/
 	 
 	    // Validate address first name
-	    if (!Validate::isName($user_variables['customer_firstname'])){
+	    /*if (!Validate::isName($user_variables['customer_firstname'])){
 	        $errors[] = Tools::displayError('customer first name wrong');
 	        unset($ps_address);
-	    }
+	    }*/
 	 
 	    // Validate address last name
-	    if (!Validate::isName($user_variables['customer_lastname'])){
+	    /*if (!Validate::isName($user_variables['customer_lastname'])){
 	        $errors[] = Tools::displayError('customer second name wrong');
 	        unset($ps_address);
-	    }
+	    }/*
 	
 	    // Validate email
-	    if (!Validate::isEmail($user_variables['email'])){
+	    /*if (!Validate::isEmail($user_variables['email'])){
 	        $errors[] = Tools::displayError('e-mail not valid');
 	        unset($phpvms_pilots);
-	    }
+	    }*/
 	 
 	    // Validate password
-	    if (!Validate::isPasswd($user_variables['passwd'])){
+	    /*if (!Validate::isPasswd($user_variables['passwd'])){
 	        $errors[] = Tools::displayError('invalid password');
 	        unset($phpvms_pilots);
-	    }
+	    }/*
 	
 	    // Validate date of birth 
-	    if (!@checkdate($user_variables['months'], $user_variables['days'], $user_variables['years']) AND !( $user_variables['months']== '' AND $user_variables['days'] == '' AND $user_variables['years'] == '')){
+	    /*if (!@checkdate($user_variables['months'], $user_variables['days'], $user_variables['years']) AND !( $user_variables['months']== '' AND $user_variables['days'] == '' AND $user_variables['years'] == '')){
 		    $errors[] = Tools::displayError('invalid birthday');
 		    unset($phpvms_pilots);
-	    }
+	    }*/
 	 
 	    // Validate newsletter checkbox
-        if (!Validate::isBool($user_variables['newsletter'])){
+        /*if (!Validate::isBool($user_variables['newsletter'])){
 	        $errors[] = Tools::displayError('newsletter invalid choice');
 	        unset($phpvms_pilots);
-	    }
+	    }/*
 	 
 	    // Validate special offers from partners checkbox
-	    if (!Validate::isBool($user_variables['optin'])){
+	    /*if (!Validate::isBool($user_variables['optin'])){
 	        $errors[] = Tools::displayError('optin invalid choice');
 	        unset($phpvms_pilots);
-	    }
+	    }*/
 	 
 	    // Validate company/orginization
-	    if (!Validate::isGenericName($user_variables['company'])){
+	    /*if (!Validate::isGenericName($user_variables['company'])){
 	        $errors[] = Tools::displayError('company name wrong');
 	        unset($ps_address);
-	    }
+	    }*/
 	 
 	    // Do not validate address line 1 since a placeholder is been curently used
 	    /*if (!Validate::isAddress($user_variables['address1'])){
@@ -335,10 +337,10 @@ class JFusionUser_phpvms extends JFusionUser {
 	    }*/
 	 
 	    // Validate address line 2
-	    if (!Validate::isAddress($user_variables['address2'])){
+	    /*if (!Validate::isAddress($user_variables['address2'])){
 	        $errors[] = Tools::displayError('address 2nd wrong');
 	        unset($ps_address);
-	    }
+	    }*/
 
 	    // Do not validate postcode since a placeholder is been curently used
 	    /*if (!Validate::isPostCode($user_variables['postcode'])){
@@ -347,16 +349,16 @@ class JFusionUser_phpvms extends JFusionUser {
 	    }*/
 	 
 	    // Validate phone number
-	    if (!Validate::isPhoneNumber($user_variables['phone'])){
+	    /*if (!Validate::isPhoneNumber($user_variables['phone'])){
 	        $errors[] = Tools::displayError('invalid phone');
 	        unset($ps_address);
-	    }
+	    }*/
 	 
 	    // Validate mobile number
-	    if (!Validate::isPhoneNumber($user_variables['phone_mobile'])){
+	    /*if (!Validate::isPhoneNumber($user_variables['phone_mobile'])){
 	        $errors[] = Tools::displayError('invalid mobile');
 	        unset($ps_address);
-	    }
+	    }*/
 	
 	    // Do not validate village/town/city since a placeholder is been curently used
 	    /*if (!Validate::isCityName($user_variables['city'])){
@@ -365,32 +367,32 @@ class JFusionUser_phpvms extends JFusionUser {
 	    }*/
 	
 	    // Validate country
-	    if (!Validate::isInt($user_variables['id_country'])){
+	    /*if (!Validate::isInt($user_variables['id_country'])){
 	        $errors[] = Tools::displayError('invalid country');
 	        unset($ps_address);
         }
 	    elseif (Country::getIsoById($user_variables['id_country']) === ""){
 	        $errors[] = Tools::displayError('invalid country');
 	        unset($ps_address);
-	    }
+	    }*/
 	
 	    // Validate state
-	    if (!Validate::isInt($user_variables['id_state'])){
+	    /*if (!Validate::isInt($user_variables['id_state'])){
 	        $errors[] = Tools::displayError('invalid state');
 	        unset($ps_address);
         }
 	    elseif (!State::getNameById($user_variables['id_state'])){
 	        if($user_variables['id_state'] === "0"){
-	            /* state valid to apply for none state */ 
+	            /* state valid to apply for none state *//*
 	        }
 	        else{
 	            $errors[] = Tools::displayError('invalid state');
 	            unset($ps_address);
 	        }
-	    }
+	    }*/
 	
 	    // Validate DNI
-	    $validateDni = Validate::isDni($user_variables['dni']);
+	    /*$validateDni = Validate::isDni($user_variables['dni']);
 	    if ($user_variables['dni'] != NULL AND $validateDni != 1){
 		    $error = array(
 		    0 => Tools::displayError('DNI isn\'t valid'),
@@ -401,25 +403,25 @@ class JFusionUser_phpvms extends JFusionUser {
 		    );
 		    $errors[] = $error[$validateDni];
 		    unset($phpvms_pilots);
-	    }
+	    }*/
 	
 	    // Validate alias
-	    elseif (!Validate::isMessage($user_variables['alias'])){
+	    /*elseif (!Validate::isMessage($user_variables['alias'])){
 	        $errors[] = Tools::displayError('invalid alias');
 	        unset($ps_address);
-	    }
+	    }*/
 	
         // Validate extra information 	
-	    elseif (!Validate::isMessage($user_variables['other'])){
+	    /*elseif (!Validate::isMessage($user_variables['other'])){
 	        $errors[] = Tools::displayError('invalid extra information');
 	        unset($ps_address);
-	    }
+	    }*/
 	
-	    /* Check if account already exists (not a validation) */
+	    /* Check if account already exists (not a validation) *//*
 	    elseif (Customer::customerExists($user_variables['email'])){
 	        $errors[] = Tools::displayError('someone has already registered with this e-mail address');
 	        unset($phpvms_pilots);
-	    }
+	    }*/
 		
 		/* enter account into phpvms database */ // if all information is validated
 	    if(isset($phpvms_pilots) && isset($phpvms_pilots_group) && isset($ps_address))
