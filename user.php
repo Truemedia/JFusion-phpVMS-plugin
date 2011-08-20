@@ -216,7 +216,7 @@ class JFusionUser_phpvms extends JFusionUser {
 	    $user_variables = array(
 	    'first_name' => $uf_name,
 		'last_name' => $end_name,
-		'email_address' => $user_variables['email_address'], // alphanumeric values between 6 and 100 characters long
+		'email_address' => $userinfo->email,
 		'airline' => "", // custom variable for registration
 		'hub' => "", // custom variable for registration
 		'location' => "", // custom variable for registration
@@ -473,6 +473,7 @@ class JFusionUser_phpvms extends JFusionUser {
 	        $query = $insert_sql_columns . $insert_sql_values;
 	        $db->setQuery($query);
 			$result = $db->query();*/
+		}
     }
     function updateEmail($userinfo, &$existinguser, &$status) {
         //we need to update the email
