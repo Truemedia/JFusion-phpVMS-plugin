@@ -78,9 +78,10 @@ class JFusionUser_phpvms extends JFusionUser {
 	    $status = array();
         $status['error'] = array();
         $status['debug'] = array();
-	    // use phpvms cookie class and functions to delete cookie
+	    // use phpvms cookie class and functions to delete cookie (logout function in Auth class)
 		$params = JFusionFactory::getParams($this->getJname());
 		$tbp = $params->get('database_prefix');
+		require($params->get('source_path') . DS . "core/codon.config.php");
 		/*$query="SELECT pilotid FROM " . $tbp . "pilots WHERE email = '" . $userinfo->email . "'";
         $db->setQuery($query);
 		$pilotid = $db->loadResult();
@@ -94,9 +95,24 @@ class JFusionUser_phpvms extends JFusionUser {
 		{
 		 $status["debug"][] = "Deleted session and session data";
 		}*/
-		//$_COOKIE['VMSAUTH'] = '';
-		setcookie('VMSAUTH', "2|1|127.0.0.1", time() + 3600*24*30);
-		return $status;
+		#self::remove_sessions(SessionManager::GetValue('userinfo', 'pilotid'));
+		
+		# Mark them as guest
+		Auth::update_session(Auth::$session_id, 0);
+		
+		# "Ghost" entry
+		//self::start_session(self::$userinfo->pilotid); // Orphaned?
+
+		SessionManager::Set('loggedin', false);
+		SessionManager::Set('userinfo', '');
+		SessionManager::Set('usergroups', '');
+
+		# Delete cookie
+		
+		$_COOKIE['VMSAUTH'] = '';
+		setcookie("VMSAUTH", false, time() - 3600*24*30, "/");
+
+		Auth::$loggedin = false;
     }
     function createSession($userinfo, $options, $framework = true) {
 	    $params = JFusionFactory::getParams($this->getJname());
