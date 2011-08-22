@@ -121,76 +121,67 @@ class JFusionUser_phpvms extends JFusionUser {
         $status['debug'] = array();
         // this uses a code extract from authentication.php that deals with logging in completely
 		$db = JFusionFactory::getDatabase($this->getJname());
-		require_once $params->get('source_path') . DS . "config" . DS . "settings.inc.php";
-	    require($params->get('source_path') . DS . "classes" . DS . "Cookie.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Blowfish.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Tools.php");
-		require($params->get('source_path') . DS . "classes" . DS . "ObjectModel.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Db.php");
-		require($params->get('source_path') . DS . "classes" . DS . "SubDomain.php");
-		require($params->get('source_path') . DS . "classes" . DS . "Validate.php");
-		$cookie = new cookie('ps');
+		require($params->get('source_path') . DS . "core/codon.config.php");
 		$passwd = $userinfo->password_clear;
 	    $email = $userinfo->email;
 		$passwd = trim($passwd);
 		$email = trim($email);
-		if (empty($email))
+
+		# Allow them to login in any manner:
+		#  Email: blah@blah.com
+		#  Pilot ID: VMA0001, VMA 001, etc
+		#  Just ID: 001
+
+		# They're logging in with an email
+		if(preg_match('/^.*\@.*$/i', $email) > 0)
 		{
-		    JText::_('EMAIL_UPDATE_ERROR');
-		    echo('e-mail address is required');
-		}
-		elseif (!Validate::isEmail($email))
+			$emailaddress = DB::escape($email);
+			$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'pilots
+					WHERE email=\''.$email.'\'';
+		} 
+		
+		$passwd = DB::escape($passwd);
+		$userinfo = DB::get_row($sql);
+
+		if(!$userinfo)
 		{
-		    JText::_('EMAIL_UPDATE_ERROR');
-		    echo('invalid e-mail address');
+			Auth::$error_message = 'This user does not exist';
+			return false;
 		}
-		elseif (empty($passwd))
+		
+		/*if($userinfo->retired == 1)
 		{
-		    JText::_('EMAIL_UPDATE_ERROR');
-		    echo('password is required');
-		}
-		elseif (Tools::strlen($passwd) > 32)
+			Auth::$error_message = 'Your account was deactivated, please contact an admin';
+			return false;
+		}*/
+
+		//ok now check it
+		$hash = md5($passwd . $userinfo->salt);
+		
+		if($hash == $userinfo->password)
+		{	
+			Auth::$userinfo =  $userinfo;
+			
+			Auth::update_session(Auth::$session_id, Auth::$userinfo->pilotid);
+
+			SessionManager::Set('loggedin', 'true');	
+			SessionManager::Set('userinfo', $userinfo);
+			SessionManager::Set('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
+			
+			PilotData::updateProfile($pilotid, array(
+				'lastlogin'=>'NOW()', 
+				'lastip' => $_SERVER['REMOTE_ADDR'],
+				)
+			);
+			
+			return true;
+		}			
+		else 
 		{
-		    JText::_('EMAIL_UPDATE_ERROR');
-		    echo('password is too long');
-		}
-		elseif (!Validate::isPasswd($passwd))
-		{
-		    JText::_('EMAIL_UPDATE_ERROR');
-		    echo('invalid password');
-		}
-		else
-	    { 
-		    /* Handle brute force attacks */
-		    sleep(1);
-			// check if password matches
-			$tbp = $params->get('database_prefix');
-			$query = "SELECT passwd FROM " . $tbp . "customer WHERE email ='" . $email . "'";
-            $db->setQuery($query);
-            $result = $db->loadResult();
-		    if (!$result)
-			{
-			    JText::_('EMAIL_UPDATE_ERROR');
-			    echo('authentication failed');
-			}
-		    else
-		    {
-				if(md5($params->get('cookie_key') . $passwd) === $result)
-				{
-				$cookie->__set("id_customer", $userinfo->userid);
-				$cookie->__set("customer_lastname", $userinfo->lastname);
-				$cookie->__set("customer_firstname", $userinfo->firstname);
-				$cookie->__set("logged", 1);
-				$cookie->__set("passwd", md5($params->get('cookie_key') . $passwd));
-				$cookie->__set("email", $email);
-				return true;
-				}
-				else
-				{
-					JText::_('EMAIL_UPDATE_ERROR');
-					echo('wrong password');
-				}
-			}
+			Auth::$error_message = 'Invalid login, please check your username and password';
+			Auth::LogOut();
+			
+			return false;
 		}
 	}
     function filterUsername($username) {
