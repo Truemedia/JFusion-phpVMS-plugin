@@ -136,37 +136,37 @@ class JFusionUser_phpvms extends JFusionUser {
 		if(preg_match('/^.*\@.*$/i', $email) > 0)
 		{
 			$emailaddress = DB::escape($email);
-			$sql = 'SELECT * FROM ' . TABLE_PREFIX . 'pilots
+			$sql = 'SELECT * FROM ' . $tbp . 'pilots
 					WHERE email=\''.$email.'\'';
 		} 
 		
 		$passwd = DB::escape($passwd);
-		$userinfo = DB::get_row($sql);
+		$users_info = DB::get_row($sql);
 
-		if(!$userinfo)
+		if(!$users_info)
 		{
 			Auth::$error_message = 'This user does not exist';
 			return false;
 		}
 		
-		/*if($userinfo->retired == 1)
+		/*if($users_info->retired == 1)
 		{
 			Auth::$error_message = 'Your account was deactivated, please contact an admin';
 			return false;
 		}*/
 
 		//ok now check it
-		$hash = md5($passwd . $userinfo->salt);
+		$hash = md5($passwd . $users_info->salt);
 		
-		if($hash == $userinfo->password)
+		if($hash == $users_info->password)
 		{	
-			Auth::$userinfo =  $userinfo;
+			Auth::$userinfo =  $users_info;
 			
 			Auth::update_session(Auth::$session_id, Auth::$userinfo->pilotid);
 
 			SessionManager::Set('loggedin', 'true');	
-			SessionManager::Set('userinfo', $userinfo);
-			SessionManager::Set('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
+			SessionManager::Set('userinfo', $users_info);
+			SessionManager::Set('usergroups', PilotGroups::GetUserGroups($users_info->pilotid));
 			
 			PilotData::updateProfile($pilotid, array(
 				'lastlogin'=>'NOW()', 
