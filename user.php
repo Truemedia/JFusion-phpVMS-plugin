@@ -43,7 +43,8 @@ class JFusionUser_phpvms extends JFusionUser {
 		$db = JFusionFactory::getDatabase($this->getJname());
         $params = JFusionFactory::getParams($this->getJname());
 		$tbp = $params->get('database_prefix');
-        $query = "SELECT pilotid as userid, firstname, lastname, password, salt FROM " . $tbp . "pilots WHERE email =" . $db->Quote($identifier);
+        $query = "SELECT pilotid as userid, firstname, lastname, email, code, location, hub, password, salt, bgimage, lastlogin, totalflights, totalhours, totalpay,
+         transferhours, rankid, rank, ranklevel, confirmed, retired, joindate, lastpirep, lastip FROM " . $tbp . "pilots WHERE email =" . $db->Quote($identifier);
         $db->setQuery($query);
         $result = $db->loadObject();
         // read through params for cookie key (the salt used)
