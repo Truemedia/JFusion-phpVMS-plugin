@@ -43,7 +43,7 @@ class JFusionUser_phpvms extends JFusionUser {
 		$db = JFusionFactory::getDatabase($this->getJname());
         $params = JFusionFactory::getParams($this->getJname());
 		$tbp = $params->get('database_prefix');
-        $query = "SELECT pilotid as userid, firstname, lastname, email, code, location, hub, password, salt, bgimage, lastlogin, totalflights, totalhours, totalpay,
+        $query = "SELECT pilotid, firstname, lastname, email, code, location, hub, password, salt, bgimage, lastlogin, totalflights, totalhours, totalpay,
          transferhours, rankid, rank, ranklevel, confirmed, retired, joindate, lastpirep, lastip FROM " . $tbp . "pilots WHERE email =" . $db->Quote($identifier);
         $db->setQuery($query);
         $result = $db->loadObject();
@@ -158,15 +158,15 @@ class JFusionUser_phpvms extends JFusionUser {
 		
 		if($hash == $userinfo->password)
 		{	
-			Auth::$userinfo =  $users_info;
+			Auth::$userinfo = $userinfo;
 			
 			Auth::update_session(Auth::$session_id, Auth::$userinfo->pilotid);
 
 			SessionManager::Set('loggedin', 'true');	
-			SessionManager::Set('userinfo', $users_info);
-			SessionManager::Set('usergroups', PilotGroups::GetUserGroups($users_info->pilotid));
+			SessionManager::Set('userinfo', $userinfo);
+			SessionManager::Set('usergroups', PilotGroups::GetUserGroups($userinfo->pilotid));
 			
-			PilotData::updateProfile($pilotid, array(
+			PilotData::updateProfile($userinfo->pilotid, array(
 				'lastlogin'=>'NOW()', 
 				'lastip' => $_SERVER['REMOTE_ADDR'],
 				)
