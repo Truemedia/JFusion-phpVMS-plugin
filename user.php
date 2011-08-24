@@ -134,21 +134,18 @@ class JFusionUser_phpvms extends JFusionUser {
 		#  Just ID: 001
 
 		# They're logging in with an email
-		if(preg_match('/^.*\@.*$/i', $email) > 0)
+		/*if(preg_match('/^.*\@.*$/i', $email) > 0)
 		{
 			$emailaddress = DB::escape($email);
 			$sql = 'SELECT * FROM ' . $tbp . 'pilots
 					WHERE email=\''.$email.'\'';
-		} 
+		}*/ 
 		
-		$passwd = DB::escape($passwd);
-		$users_info = DB::get_row($sql);
-
-		if(!$users_info)
+		/*if(!$users_info)
 		{
 			Auth::$error_message = 'This user does not exist';
 			return false;
-		}
+		}*/
 		
 		/*if($users_info->retired == 1)
 		{
@@ -157,9 +154,9 @@ class JFusionUser_phpvms extends JFusionUser {
 		}*/
 
 		//ok now check it
-		$hash = md5($passwd . $users_info->salt);
+		$hash = md5($passwd . $userinfo->salt);
 		
-		if($hash == $users_info->password)
+		if($hash == $userinfo->password)
 		{	
 			Auth::$userinfo =  $users_info;
 			
