@@ -221,13 +221,35 @@ class JFusionUser_phpvms extends JFusionUser {
 	    $user_variables = array(
 	    'first_name' => $uf_name,
 		'last_name' => $end_name,
-		'email_address' => $userinfo->email,
-		'airline' => "", // custom variable for registration
-		'hub' => "", // custom variable for registration
-		'location' => "", // custom variable for registration
-		'password' => $userinfo->password_clear,
-		'recaptcha' => "" // custom variable for registration
-	    );
+		'email_address' => $userinfo->email
+		);
+		
+		// set as true to enable jfuzed registration (extra form fields)
+		$jfuzed_registration = "true";
+		if($jfuzed_registration === "true"){
+			$user_variables['airline'] = $userinfo->airline; // custom variable for registration
+			$user_variables['hub'] = $userinfo->hub; // custom variable for registration
+			$user_variables['location'] = $userinfo->location; // custom variable for registration
+	   		 
+	   		 // get list of airline codes and compare against
+	   		 if($user_variables['airline'] == "2"){
+	   		 	$user_variables['airline'] = "AAA";
+	   		 }
+	   		 if($user_variables['location'] == "228"){
+	   		 	$user_variables['location'] = "GB";
+	   		 }
+	   		 if($user_variables['hub'] == "1"){
+	   		 	$user_variables['hub'] = "KJFK";
+	   		 }
+		}
+		else{
+			$user_variables['airline'] = ""; // custom variable for registration
+			$user_variables['hub'] = ""; // custom variable for registration
+			$user_variables['location'] = ""; // custom variable for registration
+		}
+		
+		$user_variables['password'] = $userinfo->password_clear;
+		$user_variables['recaptcha'] = ""; // custom variable for registration
 		
 		/* array to go into table phpvms_pilots */
 	    $phpvms_pilots = array(
@@ -235,9 +257,9 @@ class JFusionUser_phpvms extends JFusionUser {
  		'firstname' => $user_variables['first_name'], // alphanumeric values between 6 and 25 characters long
  		'lastname' => $user_variables['last_name'], // alphanumeric values between 6 and 25 characters long
  		'email' => $user_variables['email_address'], // alphanumeric values between 6 and 100 characters long
- 		'code' => "AAA", // letters 3 characters long
- 		'location' => "US", // alphanumeric values between 6 and 32 characters long
- 		'hub' => "", // alphanumeric value 4 characters long
+ 		'code' => $user_variables['airline'], // letters 3 characters long
+ 		'location' => $user_variables['location'], // alphanumeric values between 6 and 32 characters long
+ 		'hub' => $user_variables['hub'], // alphanumeric value 4 characters long
  		'password' => "", /* PLACEHOLDER WITH VALUE ANNOUNED LATER */
  		'salt' => md5(date('His')), // alphanumeric values between 6 and 32 characters long
  		'bgimage' => "", // alphanumeric values between 6 and 30 characters long
