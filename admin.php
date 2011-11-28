@@ -131,15 +131,11 @@ class JFusionAdmin_phpvms extends JFusionAdmin
         $db = JFusionFactory::getDatabase($this->getJname());
 		$params = JFusionFactory::getParams($this->getJname());
 		$tbp = $params->get('database_prefix');
-        $query = "SELECT value FROM " . $tbp . "configuration WHERE name IN ('PS_LANG_DEFAULT');";
-        $db->setQuery($query);
-        //getting the default language to load groups
-        $default_language = $db->loadResult();
         //phpvms uses two default groups which are admins and pilots, each have there own groups to access either the front or back end
         /*
-          Customers only for this plugin
+        Groups of all levels configurable within this plugin
         */
-        $query = "SELECT id_group as id, name as name from " . $tbp . "group_lang WHERE id_lang IN ('" . $default_language . "');";
+        $query = "SELECT groupid as id, name as name from " . $tbp . "groups;";
         $db->setQuery($query);
         //getting the results
 		$result = $db->loadObjectList();
