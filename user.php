@@ -207,20 +207,20 @@ class JFusionUser_phpvms extends JFusionUser {
 		list($uf_name, $ul_name) = preg_split('/\s+(?=[^\s]+$)/', $users_name, 2);
 		if (is_null($ul_name)) // meaning only two names were entered
 		{
-			$end_name = $um_name;
+			$end_name = $uf_name;
 		}
 		else
 		{
 			$end_name = explode(' ', $ul_name);
 			$size = sizeof($ul_name);
-			$end_name = $ul_name[$size-1];
+			$ul_name = $end_name[$size-1];
 		}
 		// now have first name as $uf_name, and last name as $end_name
 		
 		/* user variables submitted through form (emulated) */
 	    $user_variables = array(
 	    'first_name' => $uf_name,
-		'last_name' => $end_name,
+		'last_name' => $ul_name,
 		'email_address' => $userinfo->email
 		);
 		
